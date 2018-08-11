@@ -1,0 +1,11 @@
+    <h1>Show</h1>
+    <a href="/">Return</a>
+      <div>
+      <p><%= @memo.title %></p>
+      <p><%= @memo.body %></p>
+      </div>
+      <a href="/memos/<%= @memo.id %>/edit">Edit this memo</a>
+      <form method="post" acction="/memos/<%= @memo.id %>" >
+        <input type= "hidden" name="_method" value="delete">
+        <input type="submit" value="Delete!">
+      </form>

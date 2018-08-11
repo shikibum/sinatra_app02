@@ -1,0 +1,9 @@
+    <h1>Edit</h1>
+    <form method="post" acction="/memos/<%= @memo.id %>" >
+      <input type= "hidden" name="_method" value="patch">
+     <input type="text" name="title" value="<%= @memo.title %>">
+     <input type="text" name="body" value="<%= @memo.body %>">
+     <input type="submit" value="Save!">
+    </form>
+    <a href="/memos/<%= @memo.id %>">Back to this memo </a>
+    <a href="/">Back to all memos</a>  
