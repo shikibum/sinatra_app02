@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/reloader'
 
 use Rack::MethodOverride
 
@@ -7,11 +8,9 @@ end
 
 
 get '/' do
-  Dir.open()
-  # dir = Dir.glob('memos')
-  # dir.each do |title|
-  #   @title = title
-  # end
+  @titles = Dir.glob('files/*').map do |name|
+    name.sub(/files\//, '')
+  end
   erb :index
 end
 
@@ -21,30 +20,38 @@ end
 
 post "/new" do 
   str = STDIN.gets
-  File.open("/memos/#{$stdin}.txt", 'w'){|f|
+  File.open("/files/#{$stdin}.txt", 'w'){|f|
      f.puts str
    }
   redirect '/'
   erb :new
 end
 
-# get '/memos/:id/edit' do
-#   @memo = Memo.find(params['id'])
-#   erb :edit
-# end
+get '/memos/:id/edit' do
+  @title = params['id']
+  @body = open("files/#{params['id']}") {|f|
+    f.readlines
+  }
+  erb :edit
+end
 
-# patch '/memos/:id/edit' do
-#   @memo = Memo.find(params['id'])
-#   @memo.update(title: params['title'], body: params['body'])
-#   erb :show
-# end
+patch '/memos/:id/edit' do
+  @title = params['id']
+  @body = open("files/#{params['id']}", 'w') {|f|
+    f.write(params['body']) 
+  }
+  redirect "/memos/#{params['id']}"
+end
 
-# get "/memos/:id" do
-#   @memo = Memo.find(params['id'])
-#   erb :show
-# end
+get "/memos/:id" do
+  @title = params['id']
+  @body = open("files/#{params['id']}") {|f|
+    f.readlines
+  }
+  erb :show
+end
 
-# delete '/memos/:id' do
-#   Memo.find(params['id']).destroy
-#   redirect '/'
-# end
+delete '/memos/:id' do
+  File.delete("files/#{params['id']}")
+  redirect '/'
+end
