@@ -2,8 +2,10 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
 require 'securerandom'
+require 'sinatra/cookies'
 
 use Rack::MethodOverride
+set :cookie_options, { domain: 'localhost', path: '/' }
 
 get '/' do
   @contents = Dir.glob('files/*').map do |name|
@@ -33,9 +35,12 @@ post "/memos" do
 end
 
 get '/memos/:id/edit' do
+  if cookies[:user_id] == nil
+    cookies[:user_id] = SecureRandom.hex(16)
+  end
   if File.exist?("locks/#{params['id']}")
     redirect "/error"
-  else    
+  else
     open("locks/#{params['id']}", 'w'){|f|}
     @content = open("files/#{params['id']}") {|f|
       JSON.parse(f.read)
