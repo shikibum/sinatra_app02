@@ -1,7 +1,8 @@
-    <h1>Add new</h1>
-      <form method="post" action="/new">
-          <input type= "text" name="title">
-          <input type= "text" name="body">
-          <input type= "hidden" name="_mehod" value="post">
-          <input type= "submit" value="post!">
-      </form>
+<h1>Add new</h1>
+  <form method="post" acction="/memos/<%= @title %>" >
+  <input type= "hidden" name="_method" value="post">
+  <input type="text" name="title" value="<%= @title %>">
+  <textarea name="body" cols=40 rows=4><%= @body %></textarea>
+  <input type="submit" value="Save!">
+</form>
+<a href="/">Back to all memos</a>  

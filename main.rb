@@ -1,11 +1,8 @@
 require 'sinatra'
 require 'sinatra/reloader'
+require 'json'
 
 use Rack::MethodOverride
-
-class Memo
-end
-
 
 get '/' do
   @titles = Dir.glob('files/*').map do |name|
@@ -19,35 +16,38 @@ get '/new' do
 end
 
 post "/new" do 
-  str = STDIN.gets
-  File.open("/files/#{$stdin}.txt", 'w'){|f|
-     f.puts str
-   }
-  redirect '/'
-  erb :new
+  @title = params['title']
+  @body = open("files/#{params['title']}", 'w') {|f|
+    a = params.slice('title', 'body').to_json
+    f.write(a) 
+  }
+  redirect "/memos/#{params['title']}"
 end
 
 get '/memos/:id/edit' do
-  @title = params['id']
-  @body = open("files/#{params['id']}") {|f|
-    f.readlines
+  contents = open("files/#{params['id']}") {|f|
+    JSON.parse(f.read)
   }
+  @title = contents['title']
+  @body = contents['body']
   erb :edit
 end
 
 patch '/memos/:id/edit' do
-  @title = params['id']
-  @body = open("files/#{params['id']}", 'w') {|f|
-    f.write(params['body']) 
+  @title = params['title']
+  @body = open("files/#{params['title']}", 'w') {|f|
+    a = params.slice('title', 'body').to_json
+    f.write(a) 
   }
   redirect "/memos/#{params['id']}"
 end
 
 get "/memos/:id" do
-  @title = params['id']
-  @body = open("files/#{params['id']}") {|f|
-    f.readlines
+  contents = open("files/#{params['id']}") {|f|
+    JSON.parse(f.read)
   }
+  @title = contents['title']
+  @body = contents['body']
   erb :show
 end
 
