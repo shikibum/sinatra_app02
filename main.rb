@@ -38,14 +38,24 @@ get '/memos/:id/edit' do
   if cookies[:user_id] == nil
     cookies[:user_id] = SecureRandom.hex(16)
   end
+  
   if File.exist?("locks/#{params['id']}")
-    redirect "/error"
-  else
-    open("locks/#{params['id']}", 'w'){|f|}
-    @content = open("files/#{params['id']}") {|f|
-      JSON.parse(f.read)
+    user_id = open("locks/#{params['id']}") {|f|
+      f.read
     }
+    if user_id != cookies[:user_id]
+      redirect "/error"
+      return
+    end
   end
+
+  open("locks/#{params['id']}", 'w'){|f|
+    f.write(cookies[:user_id])
+  }
+  @content = open("files/#{params['id']}") {|f|
+    JSON.parse(f.read)
+  }
+  
   erb :edit
 end
 
