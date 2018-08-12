@@ -1,12 +1,15 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
+require 'securerandom'
 
 use Rack::MethodOverride
 
 get '/' do
-  @titles = Dir.glob('files/*').map do |name|
-    name.sub(/files\//, '')
+  @contents = Dir.glob('files/*').map do |name|
+    open(name) {|f|
+      JSON.parse(f.read)
+    } 
   end
   erb :index
 end
@@ -15,13 +18,14 @@ get '/new' do
   erb :new
 end
 
-post "/new" do 
-  @title = params['title']
-  @body = open("files/#{params['title']}", 'w') {|f|
-    a = params.slice('title', 'body').to_json
-    f.write(a) 
+post "/new" do
+  id = SecureRandom.hex(16)
+  open("files/#{id}", 'w') {|f|
+    a = params.slice('title', 'body')
+    a['id'] = id
+    f.write(a.to_json)
   }
-  redirect "/memos/#{params['title']}"
+  redirect "/memos/#{id}"
 end
 
 get '/memos/:id/edit' do
@@ -34,10 +38,9 @@ get '/memos/:id/edit' do
 end
 
 patch '/memos/:id/edit' do
-  @title = params['title']
-  @body = open("files/#{params['title']}", 'w') {|f|
-    a = params.slice('title', 'body').to_json
-    f.write(a) 
+  open("files/#{params['id']}", 'w') {|f|
+    a = params.slice('title', 'body', 'id')
+    f.write(a.to_json)
   }
   redirect "/memos/#{params['id']}"
 end

@@ -4,7 +4,7 @@
       <p><%= @title %></p>
       <p><%= @body %></p>
       </div>
-      <a href="/memos/<%= @title %>/edit">Edit this memo</a>
+      <a href="/memos/<%= params['id'] %>/edit">Edit this memo</a>
       <form method="post" acction="/memos/<%= @title %>" >
         <input type= "hidden" name="_method" value="delete">
         <input type="submit" value="Delete!">

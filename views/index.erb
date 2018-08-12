@@ -1,9 +1,9 @@
 <h1>メモ一覧</h1>
-  <a href='/new'>新規メモ</a>
-    <ul>
-    <% @titles.each do |title| %>
-       <li>
-         <a href="/memos/<%= title %>"><%= title %></a>
-        </li>
-    <% end %>
-   </ul>
+<a href='/new'>新規メモ</a>
+<ul>
+  <% @contents.each do |content| %>
+    <li>
+      <a href="/memos/<%= content['id'] %>"><%= content['title'].gsub(/(\r\n|\r|\n)/, "<br>") %></a>
+    </li>
+  <% end %>
+</ul>
