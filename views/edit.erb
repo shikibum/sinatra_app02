@@ -1,9 +1,13 @@
-    <h1>Edit</h1>
-    <form method="post" acction="/memos/<%= @title %>" >
-      <input type= "hidden" name="_method" value="patch">
-     <input type="text" name="title" value="<%= @title %>">
-     <textarea name="body" cols=40 rows=4><%= @body %></textarea>
-     <input type="submit" value="Save!">
-    </form>
-    <a href="/memos/<%= @title %>">Back to this memo </a>
-    <a href="/">Back to all memos</a>  
+<h1>Edit</h1>
+<form method="post" action="/memos/<%= @content['id'] %>" >
+  <input type= "hidden" name="_method" value="patch">
+  <input type="text" name="title" value="<%= @content['title'] %>">
+  <textarea name="body" cols=40 rows=4><%= @content['body'] %></textarea>
+  <input type="submit" value="Save!">
+</form>
+<form method="post" action="/memos/<%= @content['id'] %>/cancel" >
+  <input type= "hidden" name="_method" value="patch">
+  <input type="submit" value="Cancel!">
+</form>
+<a href="/memos/<%= @content['id'] %>">Back to this memo </a>
+<a href="/">Back to all memos</a>  

@@ -1,11 +1,11 @@
     <h1>Show</h1>
     <a href="/">Back to all memos</a>
       <div>
-      <p><%= @title %></p>
-      <p><%= @body %></p>
+      <p><%= @content['title'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
+      <p><%= @content['body'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
       </div>
       <a href="/memos/<%= params['id'] %>/edit">Edit this memo</a>
-      <form method="post" acction="/memos/<%= @title %>" >
+      <form method="post" acction="/memos/<%= @content['id'] %>" >
         <input type= "hidden" name="_method" value="delete">
         <input type="submit" value="Delete!">
       </form>

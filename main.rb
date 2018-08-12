@@ -18,8 +18,12 @@ get '/new' do
   erb :new
 end
 
-post "/new" do
+post "/memos" do
   id = SecureRandom.hex(16)
+  while File.exist?("files/#{id}") do
+    id = SecureRandom.hex(16)
+  end 
+
   open("files/#{id}", 'w') {|f|
     a = params.slice('title', 'body')
     a['id'] = id
@@ -29,15 +33,18 @@ post "/new" do
 end
 
 get '/memos/:id/edit' do
-  contents = open("files/#{params['id']}") {|f|
-    JSON.parse(f.read)
-  }
-  @title = contents['title']
-  @body = contents['body']
+  if File.exist?("locks/#{params['id']}")
+    redirect "/error"
+  else    
+    open("locks/#{params['id']}", 'w'){|f|}
+    @content = open("files/#{params['id']}") {|f|
+      JSON.parse(f.read)
+    }
+  end
   erb :edit
 end
 
-patch '/memos/:id/edit' do
+patch '/memos/:id' do
   open("files/#{params['id']}", 'w') {|f|
     a = params.slice('title', 'body', 'id')
     f.write(a.to_json)
@@ -45,12 +52,16 @@ patch '/memos/:id/edit' do
   redirect "/memos/#{params['id']}"
 end
 
+patch '/memos/:id/cancel' do
+  File.delete("locks/#{params['id']}")
+  redirect "/memos/#{params['id']}"
+end
+
 get "/memos/:id" do
-  contents = open("files/#{params['id']}") {|f|
+  @content = open("files/#{params['id']}") {|f|
     JSON.parse(f.read)
   }
-  @title = contents['title'].gsub(/(\r\n|\r|\n)/, "<br>") 
-  @body = contents['body'].gsub(/(\r\n|\r|\n)/, "<br>") 
+
   erb :show
 end
 
@@ -58,3 +69,7 @@ delete '/memos/:id' do
   File.delete("files/#{params['id']}")
   redirect '/'
 end
+
+get '/error' do
+  erb :error
+end 
