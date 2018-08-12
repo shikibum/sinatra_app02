@@ -46,8 +46,8 @@ get "/memos/:id" do
   contents = open("files/#{params['id']}") {|f|
     JSON.parse(f.read)
   }
-  @title = contents['title']
-  @body = contents['body']
+  @title = contents['title'].gsub(/(\r\n|\r|\n)/, "<br>") 
+  @body = contents['body'].gsub(/(\r\n|\r|\n)/, "<br>") 
   erb :show
 end
 
