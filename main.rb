@@ -64,6 +64,7 @@ patch '/memos/:id' do
     a = params.slice('title', 'body', 'id')
     f.write(a.to_json)
   }
+  File.delete("locks/#{params['id']}")
   redirect "/memos/#{params['id']}"
 end
 
