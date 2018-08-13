@@ -1,7 +1,7 @@
     <h1>Show</h1>
     <a href="/">Back to all memos</a>
       <div>
-      <p><%= Time.parse(@content['time']).strftime("%Y年%m月%d日 %H時%M分") %></p>
+      <p><%= Time.parse(@content['time']).strftime("%Y年%m月%d日 %H時%M分%S秒") %></p>
       <p><%= @content['title'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
       <p><%= @content['body'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
       </div>
