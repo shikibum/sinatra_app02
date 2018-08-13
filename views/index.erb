@@ -1,9 +1,10 @@
 <h1>メモ一覧</h1>
 <a href='/new'>新規メモ</a>
 <ul>
-  <% @contents.each do |content| %>
+  <% @contents.sort_by{|val| val['time']}.reverse.each do |content| %>
     <li>
       <a href="/memos/<%= content['id'] %>"><%= content['title'].gsub(/(\r\n|\r|\n)/, "<br>") %></a>
+      <p><%= Time.parse(content['time']).strftime("%Y年%m月%d日 %H時%M分") %></p>
     </li>
   <% end %>
 </ul>
