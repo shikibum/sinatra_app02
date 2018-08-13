@@ -30,8 +30,7 @@ post '/memos' do
 
   open("files/#{id}", 'w') {|f|
     a = params.slice('title', 'body')
-    a['id'] = id
-    a['time'] = f.ctime
+    a.merge('id' => id, 'time' => Time.now)
     f.write(a.to_json)
   }
   redirect "/memos/#{id}"
@@ -65,7 +64,7 @@ end
 patch '/memos/:id' do
   open("files/#{params['id']}", 'w') {|f|
     a = params.slice('title', 'body', 'id', 'time')
-    a['time'] = f.ctime
+    a['time'] = Time.now
     f.write(a.to_json)
   }
   File.delete("locks/#{params['id']}")
