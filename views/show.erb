@@ -1,17 +1,19 @@
-<h1 class="main__title">Show</h1>
+<header class="header">
+  <h1 class="main__title">Show</h1>
+  <a class="back-to-top" href="/">Back to all memos</a> 
+</header>
 <div class="content">
   <div class="content-items">
     <div class="content-item__time">
-      <p>最終更新日時</p>
-      <p><%= Time.parse(@content['time']).strftime("%Y年%m月%d日 %H時%M分%S秒") %></p>  
+      <p>最終更新日時 <%= Time.parse(@content['time']).strftime("%Y年%m月%d日 %H時%M分%S秒") %></p>  
     </div>
     <div class="content-item__title">
       <p class="content-item__description" >title</p>
-      <p class="content-item__title"><%= @content['title'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
+      <p class="content-item"><%= @content['title'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
     </div>
     <div class="content-item__body">
       <p class="content-item__description">本文</p>
-      <p class="content-item__body"><%= @content['body'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
+      <p class="content-item"><%= @content['body'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
     </div>
   </div>
 </div>

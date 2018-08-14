@@ -1,4 +1,7 @@
-<h1 class="main__title">Edit</h1>
+<header class="header">
+  <h1 class="main__title">Edit</h1>
+  <a class="back-to-top" href="/">Back to all memos</a> 
+</header>
 <article class="article">
   <div class="form">
     <form method="post" action="/memos/<%= @content['id'] %>" >
@@ -9,13 +12,13 @@
       </div>
       <div class="form-item__body">
         <p class="form-item__description">本文</p>
-        <textarea class="form-item__textarea" name="body" cols=40 rows=4><%= @content['body'] %></textarea>
+        <textarea class="form-item__textarea" name="body" cols=40 rows=6><%= @content['body'] %></textarea>
         <input class="form-item__button" type="submit" value="Save!">
       </div>
     </form>
     <form method="post" action="/memos/<%= @content['id'] %>/cancel" >
       <input type= "hidden" name="_method" value="patch">
-      <input class="form-item__button" type="submit" value="Cancel!">
+      <input class="form-item__button_cancel" type="submit" value="Cancel!">
     </form>
   </div>
   <div class"buttons">
