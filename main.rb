@@ -30,7 +30,7 @@ post '/memos' do
 
   open("files/#{id}", 'w') do |f|
     a = params.slice('title', 'body')
-    a.merge('id' => id, 'time' => Time.now)
+    a = a.merge('id' => id, 'time' => Time.now)
     f.write(a.to_json)
   end
   redirect "/memos/#{id}"
@@ -41,8 +41,16 @@ get '/memos/:id/edit' do
     cookies[:user_id] = SecureRandom.hex(16)
   end
 
-  if File.exist?("locks/#{params['id']}")
-    user_id = open("locks/#{params['id']}") do |f|
+  lock_filename = "locks/#{params['id']}"
+
+  if File.exist?(lock_filename)
+    if Time.now - File.birthtime(lock_filename) > 1800
+    File.delete(lock_filename)
+    end
+  end
+
+  if File.exist?(lock_filename)
+    user_id = open(lock_filename) do |f|
       f.read
     end
     if user_id != cookies[:user_id]
@@ -51,7 +59,7 @@ get '/memos/:id/edit' do
     end
   end
 
-  open("locks/#{params['id']}", 'w') do |f|
+  open(lock_filename, 'w') do |f|
     f.write(cookies[:user_id])
   end
   @content = open("files/#{params['id']}") do |f|

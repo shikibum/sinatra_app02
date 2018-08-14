@@ -1,27 +1,25 @@
 <header class="header">
-  <h1 class="main__title">Edit</h1>
-  <a class="back-to-top" href="/">Back to all memos</a> 
+  <h1 class="header__title">Edit</h1>
+  <a class="header__back-to-top" href="/">Back to all memos</a> 
 </header>
+
 <article class="article">
-  <div class="form">
-    <form method="post" action="/memos/<%= @content['id'] %>" >
-      <div class="form-item__title">
-        <p class="form-item__description" >title</p>
+    <form class="form" method="post" action="/memos/<%= @content['id'] %>" >
+      <div class="form__title">
+        <p class="form__description" >title</p>
         <input type= "hidden" name="_method" value="patch">
-        <input class="form-item__input" type="text" name="title" value="<%= @content['title'] %>">
+        <input class="form__input" type="text" name="title" value="<%= @content['title'] %>">
       </div>
-      <div class="form-item__body">
-        <p class="form-item__description">本文</p>
-        <textarea class="form-item__textarea" name="body" cols=40 rows=6><%= @content['body'] %></textarea>
-        <input class="form-item__button" type="submit" value="Save!">
+      <div class="form__body">
+        <p class="form__description">本文</p>
+        <textarea class="form__textarea" name="body" cols=40 rows=6><%= @content['body'] %></textarea>
+        <input class="form__button" type="submit" value="Save!">
       </div>
     </form>
-    <form method="post" action="/memos/<%= @content['id'] %>/cancel" >
+    <form class="form" method="post" action="/memos/<%= @content['id'] %>/cancel" >
       <input type= "hidden" name="_method" value="patch">
-      <input class="form-item__button_cancel" type="submit" value="Cancel!">
+      <input class="form__button_cancel" type="submit" value="Cancel!">
     </form>
-  </div>
-  <div class"buttons">
-    <a class="buttons-item" href="/memos/<%= @content['id'] %>">Back to this memo </a>
-  </div>
+  
+    <a class="button" href="/memos/<%= @content['id'] %>">Back to this memo</a>
 </article>
