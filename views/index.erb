@@ -1,7 +1,7 @@
 <h1 class="main__title">メモ一覧</h1>
 <div class="article">
-  <a class="article-item__button" href='/new'>+ 新規メモ</a>
-  <ul class="article-item">
+  <a class="article__button" href='/new'>+ 新規メモ</a>
+  <ul class="article-items">
     <% @contents.sort_by{|val| val['time']}.reverse.each do |content| %>
       <li>
         <a class="article-item__list" href="/memos/<%= content['id'] %>"><%= content['title'].gsub(/(\r\n|\r|\n)/, "<br>") %></a>

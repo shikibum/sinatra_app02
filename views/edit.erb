@@ -1,13 +1,24 @@
 <h1 class="main__title">Edit</h1>
-<form method="post" action="/memos/<%= @content['id'] %>" >
-  <input type= "hidden" name="_method" value="patch">
-  <input type="text" name="title" value="<%= @content['title'] %>">
-  <textarea name="body" cols=40 rows=4><%= @content['body'] %></textarea>
-  <input type="submit" value="Save!">
-</form>
-<form method="post" action="/memos/<%= @content['id'] %>/cancel" >
-  <input type= "hidden" name="_method" value="patch">
-  <input type="submit" value="Cancel!">
-</form>
-<a class="button" href="/memos/<%= @content['id'] %>">Back to this memo </a>
-<a class="button__back-to-top" href="/">Back to all memos</a>  
+<article class="article">
+  <div class="form">
+    <form method="post" action="/memos/<%= @content['id'] %>" >
+      <div class="form-item__title">
+        <p class="form-item__description" >title</p>
+        <input type= "hidden" name="_method" value="patch">
+        <input class="form-item__input" type="text" name="title" value="<%= @content['title'] %>">
+      </div>
+      <div class="form-item__body">
+        <p class="form-item__description">本文</p>
+        <textarea class="form-item__textarea" name="body" cols=40 rows=4><%= @content['body'] %></textarea>
+        <input class="form-item__button" type="submit" value="Save!">
+      </div>
+    </form>
+    <form method="post" action="/memos/<%= @content['id'] %>/cancel" >
+      <input type= "hidden" name="_method" value="patch">
+      <input class="form-item__button" type="submit" value="Cancel!">
+    </form>
+  </div>
+  <div class"buttons">
+    <a class="buttons-item" href="/memos/<%= @content['id'] %>">Back to this memo </a>
+  </div>
+</article>

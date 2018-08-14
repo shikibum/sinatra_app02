@@ -1,10 +1,17 @@
 <h1 class="main__title">Add new</h1>
-  <form class="form" method="post" action="/memos" >
-  <input type= "hidden" name="_method" value="post">
-  <p class="form-item__description" >title</p>
-  <input class="form-item__input" type="text" name="title" value="">
-  <p class="form-item__description">本文</p>
-  <textarea class="form-item__textarea" name="body" cols=40 rows=4></textarea>
-  <input class="form-item__submit" type="submit" value="Save!">
-</form>
-<a class="button__back-to-top" href="/">Back to all memos</a>  
+<article class="article">
+  <div class="form">
+    <form method="post" action="/memos" >
+      <div class="form-item__title">
+        <input type= "hidden" name="_method" value="post">
+        <p class="form-item__description" >title</p>
+        <input class="form-item__input" type="text" name="title" value="">
+      </div>
+        <div class="form-item__body">
+          <p class="form-item__description">本文</p>
+          <textarea class="form-item__textarea" name="body" cols=40 rows=4></textarea>
+          <input class="form-item__button" type="submit" value="Save!">
+        </div>
+    </form>
+  </div>
+</article>
