@@ -1,4 +1,4 @@
-<h1>Edit</h1>
+<h1 class="main__title">Edit</h1>
 <form method="post" action="/memos/<%= @content['id'] %>" >
   <input type= "hidden" name="_method" value="patch">
   <input type="text" name="title" value="<%= @content['title'] %>">
@@ -9,5 +9,5 @@
   <input type= "hidden" name="_method" value="patch">
   <input type="submit" value="Cancel!">
 </form>
-<a href="/memos/<%= @content['id'] %>">Back to this memo </a>
-<a href="/">Back to all memos</a>  
+<a class="button" href="/memos/<%= @content['id'] %>">Back to this memo </a>
+<a class="button__back-to-top" href="/">Back to all memos</a>  

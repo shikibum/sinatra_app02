@@ -242,12 +242,51 @@ textarea {
 /*# sourceMappingURL=bootstrap-reboot.css.map */
 
 body {
-  background-color: #FAFAFA;
+  background-color: #CDDAD4;
   display: flex;
   justify-content: center;
 }
 
 main {
-  background-color: white;
+  background-color: #F8F8FF;
   width: 50%;
+  margin-top: 3rem;
+  border-radius: 0.5rem;
+  padding: 2rem;
 }
+
+.article {
+  margin-top: 2rem;
+}
+
+.article-item__button {
+  font-size: 1rem;
+  background-color: #CDDAD4;
+  font-weight: bold;
+  padding: 1rem;
+  color: #212529;
+  border-radius: 0.5rem;
+}
+
+.article-item__list {
+  font-size: 1.2rem;
+}
+
+.article-item__time {
+  font-size: 0.8rem;
+}
+
+/* showページ */
+
+.button__back-to-top {
+  font-size: 1rem;
+  background-color: #CDDAD4;
+  font-weight: bold;
+  padding: 1rem;
+  color: #212529;
+  border-radius: 0.5rem;
+}
+
+.content {}
+
+.content-item {}

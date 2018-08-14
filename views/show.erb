@@ -1,12 +1,14 @@
-    <h1>Show</h1>
-    <a href="/">Back to all memos</a>
-      <div>
-      <p><%= Time.parse(@content['time']).strftime("%Y年%m月%d日 %H時%M分%S秒") %></p>
-      <p><%= @content['title'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
-      <p><%= @content['body'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
-      </div>
-      <a href="/memos/<%= params['id'] %>/edit">Edit this memo</a>
-      <form method="post" acction="/memos/<%= @content['id'] %>" >
-        <input type= "hidden" name="_method" value="delete">
-        <input type="submit" value="Delete!">
-      </form>
+<h1 class="main__title">Show</h1>
+<a class="button__back-to-top" href="/">Back to all memos</a>
+<div class="content">
+  <p class="content-item__description" >title</p>
+  <p class="content-item"><%= @content['title'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
+  <p class="content-item__time"><%= Time.parse(@content['time']).strftime("%Y年%m月%d日 %H時%M分%S秒") %></p>
+  <p class="content-item__description">本文</p>
+  <p class="content-item"><%= @content['body'].gsub(/(\r\n|\r|\n)/, "<br>") %></p>
+</div>
+<a class="button" href="/memos/<%= params['id'] %>/edit">Edit this memo</a>
+<form class"form" method="post" acction="/memos/<%= @content['id'] %>" >
+  <input type= "hidden" name="_method" value="delete">
+  <input class="form-button__delete" type="submit" value="Delete!">
+</form>
