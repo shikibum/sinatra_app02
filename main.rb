@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
@@ -6,11 +8,11 @@ require 'sinatra/cookies'
 require 'time'
 
 use Rack::MethodOverride
-set :cookie_options, { domain: 'localhost', path: '/' }
+set :cookie_options, domain: 'localhost', path: '/'
 
 get '/' do
   @contents = Dir.glob('files/*').map do |name|
-    open(name) do |f|
+    File.open(name) do |f|
       JSON.parse(f.read)
     end
   end
@@ -24,9 +26,7 @@ end
 
 post '/memos' do
   id = SecureRandom.hex(16)
-  while File.exist?("files/#{id}")
-    id = SecureRandom.hex(16)
-  end
+  id = SecureRandom.hex(16) while File.exist?("files/#{id}")
 
   open("files/#{id}", 'w') do |f|
     a = params.slice('title', 'body')
@@ -37,29 +37,25 @@ post '/memos' do
 end
 
 get '/memos/:id/edit' do
-  if cookies[:user_id] == nil
-    cookies[:user_id] = SecureRandom.hex(16)
-  end
+  cookies[:user_id] = SecureRandom.hex(16) if cookies[:user_id].nil?
 
   lock_filename = "locks/#{params['id']}"
 
   if File.exist?(lock_filename)
     if Time.now - File.birthtime(lock_filename) > 1800
-    File.delete(lock_filename)
+      File.delete(lock_filename)
     end
   end
 
   if File.exist?(lock_filename)
-    user_id = open(lock_filename) do |f|
-      f.read
-    end
+    user_id = File.open(lock_filename, &:read)
     if user_id != cookies[:user_id]
       redirect '/error'
       return
     end
   end
 
-  open(lock_filename, 'w') do |f|
+  File.open(lock_filename, 'w') do |f|
     f.write(cookies[:user_id])
   end
   @content = open("files/#{params['id']}") do |f|
